@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios';
 import Veggie from './Page/veggie';
+import SingleVeggie from './Page/singleVeggie';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
   useEffect(() => {
 
     axios('/fruits').then((response)=> {
-      console.log(response);
+      // console.log(response);
       setFruitArray(response.data)
     })
 
@@ -26,7 +27,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData)
+    // console.log(formData)
     if (formData.age > 0) {
       axios({
          method: "POST",
@@ -35,8 +36,13 @@ function App() {
          data: formData
        })
     } else {
+     
       // tell user negative values aren't allowed
     }
+    setFormData ({name: '',
+    age: 1,
+    canEat: false})
+    
     // send form data to server create route
   }
 
@@ -76,6 +82,7 @@ function App() {
         {fruitJSX}
       </section>  
       <Veggie/>
+      <SingleVeggie/>
 
     </div>
   )

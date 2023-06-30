@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 
 const Veggie = () => {
     const [veggies, setVeggies]= useState([])
-
     const [formData, setFormData] = useState({
       name: '',
       age: 1,
@@ -19,38 +18,30 @@ const Veggie = () => {
     useEffect( ()=>{
 
         axios('/veggies').then((response)=> {
-            console.log(response);
+            // console.log(response);
             setVeggies(response.data)
          
-
         })
 
     }, [])
-    console.log(veggies)
+    // console.log(veggies)
 
-    useEffect(() => {
-  
-      axios('/veggies').then((response)=> {
-        console.log(response);
-        setVeggieArray(response.data)
-      })
-  
-    }, []);
-  
+    
     const handleSubmit = (e) => {
       e.preventDefault();
-      console.log(formData)
-      if (formData.age > 0) {
+       
         axios({
            method: "POST",
-           url: "/veggies",
+           url: "/create_veggie",
            // goes to the server the app is from!
            data: formData
          })
-      } else {
-        // tell user negative values aren't allowed
-      }
-      // send form data to server create route
+     
+       setFormData({
+        name: '',
+        age: 1,
+        canEat: false
+      })
     }
   
     const handleChange = (e) => {
@@ -63,11 +54,11 @@ const Veggie = () => {
     }
   
   
-    let veggieJSX = veggieArray.map((veggie) => {
+    let veggiesJSX = veggies.map((veggie) => {
       return <div key={veggie._id} className={veggie.canEat ? "green" : "red"} >{veggie.name}</div>
     });
 
-
+    
 
   return (
     <div>
@@ -89,6 +80,7 @@ const Veggie = () => {
         </div>
         <button>Submit</button>
       </form>
+      <div>{veggiesJSX }</div>
     </div>
   )
 }

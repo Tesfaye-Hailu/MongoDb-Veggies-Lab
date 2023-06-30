@@ -1,5 +1,4 @@
-
-
+const Fruit = require("../Models/Fruit");
 
 const getFruits =  async (req, res) => {
     let databaseResponse = await Fruit.find();
